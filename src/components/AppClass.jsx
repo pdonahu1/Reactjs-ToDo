@@ -1,34 +1,50 @@
 import React, { Component } from 'react'
 
 export default class AppClass extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            todos: [
-                {
-                  id: 1,
-                  title: 'Finish react series',
-                  isComplete: false,
-                },
-                {
-                  id: 2,
-                  title: 'Go to grocery store',
-                  isComplete: true,
-                },
-                {
-                  id: 3,
-                  title: 'Take over world',
-                  isComplete: false,
-                }
-              ]
-        }
-    }
+  constructor(props) {
+      super(props)
+      this.state = {
+          todos: [
+              {
+                id: 1,
+                title: 'Finish react series',
+                isComplete: false,
+              },
+              {
+                id: 2,
+                title: 'Go to grocery store',
+                isComplete: true,
+              },
+              {
+                id: 3,
+                title: 'Take over world',
+                isComplete: false,
+              }
+            ]
+      }
+  }
+
+  addTodo = function(event) {
+    event.preventDefault()
+
+    this.setState(prevState => {
+      const newTodos = [
+        ... prevState.todos, {
+        id: 4,
+        title: 'This is class based components',
+        isComplete: false
+      }]
+
+      return {todos: newTodos}
+    })
+  }
+
   render() {
     return (
         <div className="todo-app-container">
         <div className="todo-app">
           <h2>Todo App</h2>
-          <form action="#">
+          <form action="#" onSubmit={addTodo}>
             <input
               type="text"
               className="todo-input"
@@ -38,9 +54,9 @@ export default class AppClass extends Component {
   
           <ul className="todo-list">
             {this.state.todos.map((todo, index) => (
-            <li className="todo-item-container">
+            <li ket={todo.id} className="todo-item-container">
               <div className="todo-item">
-                <input type="checkbox" />
+                <input type="checkbox" /> 
                 <span className="todo-item-label">{todo.title}</span>
                 {/* <input type="text" className="todo-item-input" value="Finish React Series" /> */}
               </div>

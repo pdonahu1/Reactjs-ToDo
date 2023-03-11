@@ -21,13 +21,41 @@ function App() {
     }
   ])
 
+  const [todoInput, setTodoInput] = useState('')
+  const [newTodoId, setNewTodoId] = useState(4)
+
+  function addTodo(event) {
+    event.preventDefault()
+
+    if(todoInput.trim().length !== 0) {
+      setTodos([... todos, {
+        id: newTodoId,
+        title: todoInput,
+        isComplete: false
+      }])
+  
+      setTodoInput('')
+      setNewTodoId(prevTodoId => prevTodoId + 1)
+    }
+  }
+
+  function deleteTodo(id) {
+    setTodos([... todos].filter(todo => todo.id !== id))
+  }
+
+  function handleInput(event) {
+    setTodoInput(event.target.value)
+  }
+
   return (
     <div className="todo-app-container">
       <div className="todo-app">
         <h2>Todo App</h2>
-        <form action="#">
+        <form action="#" onSubmit={addTodo}>
           <input
             type="text"
+            value={todoInput}
+            onChange={handleInput}
             className="todo-input"
             placeholder="What do you need to do?"
           />
@@ -35,28 +63,28 @@ function App() {
 
         <ul className="todo-list">
           {todos.map((todo, index) => (
-          <li className="todo-item-container">
-            <div className="todo-item">
-              <input type="checkbox" />
-              <span className="todo-item-label">{todo.title}</span>
-              {/* <input type="text" className="todo-item-input" value="Finish React Series" /> */}
-            </div>
-            <button className="x-button">
-              <svg
-                className="x-button-icon"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            </button>
-          </li>
+            <li key={todo.id} className="todo-item-container">
+              <div className="todo-item">
+                <input type="checkbox" />
+                <span className="todo-item-label">{todo.title}</span>
+                {/* <input type="text" className="todo-item-input" value="Finish React Series" /> */}
+              </div>
+              <button onClick={() => deleteTodo(todo.id)} className="x-button">
+                <svg
+                  className="x-button-icon"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </li>
           ))}
         </ul>
 
