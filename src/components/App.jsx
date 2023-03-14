@@ -16,7 +16,7 @@ function App() {
     {
       id: 2,
       title: 'Go to grocery store',
-      isComplete: false,
+      isComplete: true,
       isEditing: false
     },
     {
@@ -76,6 +76,41 @@ function App() {
     setTodos(updatedTodos)
   }
 
+  function remaining() {
+    return todos.filter(todo => !todo.isComplete).length
+  }
+
+  function clearCompleted() {
+    setTodos([...todos].filter(todo => !todo.isComplete))
+  }
+
+  function completeAllTodos() {
+    let updatedTodos
+    if (todos.filter(todo => !todo.isComplete).length === 0) {
+      updatedTodos = todos.map(todo => {
+        todo.isComplete = false
+        return todo
+      })
+    } else {
+      updatedTodos = todos.map(todo => {
+        todo.isComplete = true
+        return todo
+      })
+    }
+
+    setTodos(updatedTodos)
+  }
+
+  function todosFiltered(filter) {
+    if (filter === 'all') {
+      return todos
+    } else if (filter === 'active') {
+      return todos.filter(todo => !todo.isComplete)
+    } else if (filter === 'completed') {
+      return todos.filter(todo => todo.isComplete)
+    }
+  }
+
   function updateTodo(event, id) {
     const updatedTodos = todos.map(todo => {
       if (todo.id === id) {
@@ -99,7 +134,17 @@ function App() {
         <TodoForm addTodo={addTodo}/>
 
         {todos.length > 0 ? (
-          <TodoList todos={todos} completeTodo={completeTodo} markAsEditing={markAsEditing} updateTodo={updateTodo} cancelEditing={cancelEditing} deleteTodo={deleteTodo}/>
+          <TodoList 
+          todos={todos} 
+          completeTodo={completeTodo} 
+          markAsEditing={markAsEditing} 
+          updateTodo={updateTodo} 
+          cancelEditing={cancelEditing} 
+          deleteTodo={deleteTodo}
+          remaining={remaining}
+          clearCompleted={clearCompleted}
+          completeAllTodos={completeAllTodos}
+          todosFiltered={todosFiltered}/>
         ) : (
           <NoTodos />
         )}
