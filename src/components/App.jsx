@@ -3,9 +3,11 @@ import '../App.css'
 import NoTodos from './NoTodos'
 import TodoForm from './TodoForm'
 import TodoList from './TodoList'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 function App() {
+  const [name, setName] = useState('')
+  const nameInputEl = useRef(null)
   const [todos, setTodos] = useState([
     {
       id: 1,
@@ -127,24 +129,48 @@ function App() {
     setTodos(updatedTodos)
   }
 
+  useEffect(() => {
+    // console.log('use effect running')
+    nameInputEl.current.focus()
+
+    return function cleanup() {
+      // console.log('cleaning up')
+    }
+  }, [])
+
   return (
     <div className="todo-app-container">
       <div className="todo-app">
+        <div className="name-container">
+          <h2>What is your name?</h2>
+          <form action="#">
+            <input 
+              type="text" 
+              ref={nameInputEl}
+              className="todo-input"
+              placeholder="What is your name?" 
+              value={name}
+              onChange={event => setName(event.target.value)}
+            />
+          </form>
+          {name && <p className="name-label">Hello, {name}</p>}
+        </div>
         <h2>Todo App</h2>
         <TodoForm addTodo={addTodo}/>
 
         {todos.length > 0 ? (
           <TodoList 
-          todos={todos} 
-          completeTodo={completeTodo} 
-          markAsEditing={markAsEditing} 
-          updateTodo={updateTodo} 
-          cancelEditing={cancelEditing} 
-          deleteTodo={deleteTodo}
-          remaining={remaining}
-          clearCompleted={clearCompleted}
-          completeAllTodos={completeAllTodos}
-          todosFiltered={todosFiltered}/>
+            todos={todos} 
+            completeTodo={completeTodo} 
+            markAsEditing={markAsEditing} 
+            updateTodo={updateTodo} 
+            cancelEditing={cancelEditing} 
+            deleteTodo={deleteTodo}
+            remaining={remaining}
+            clearCompleted={clearCompleted}
+            completeAllTodos={completeAllTodos}
+            todosFiltered={todosFiltered}
+          />
         ) : (
           <NoTodos />
         )}
