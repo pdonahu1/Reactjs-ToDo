@@ -1,13 +1,17 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { useContext, useMemo } from 'react'
+import { TodosContext } from '../context/TodosContext'
 
-TodoItemsRemaining.propTypes = {
-    remaining: PropTypes.func.isRequired,
-}
+function TodoItemsRemaining() {
+  const {todos} = useContext(TodosContext)
 
-function TodoItemsRemaining(props) {
+  function remainingCalculation() {
+    return todos.filter(todo => !todo.isComplete).length
+  }
+
+  const remaining = useMemo(remainingCalculation, [todos])
+
   return (
-    <span>{props.remaining()} items remaining</span>
+    <span>{remaining} items remaining</span>
   )
 }
 
