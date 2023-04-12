@@ -17,11 +17,14 @@ function TodoForm() {
             return
         }
 
-        setTodos([...todos, {
-            id: newTodoId,
-            title: todos,
-            isComplete: false
-        }])
+        setTodos([
+            ...todos, 
+            {
+                id: newTodoId,
+                title: todos,
+                isComplete: false
+            },
+        ])
     
         setNewTodoId(prevTodoId => prevTodoId + 1)
 
@@ -32,11 +35,11 @@ function TodoForm() {
         <form action="#" onSubmit={addTodo}>
             {/* <span>{msg}</span> */}
             <input
-            type="text"
-            value={todoInput}
-            onChange={handleInput}
-            className="todo-input"
-            placeholder="What do you need to do?"
+                type="text"
+                value={todoInput}
+                onChange={handleInput}
+                className="todo-input"
+                placeholder="What do you need to do?"
             />
         </form>
     )
