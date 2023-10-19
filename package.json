@@ -1,5 +1,6 @@
 {
-  "name": "lc-react",
+  "homepage": "https://pdonahu1.github.io/React-ToDo",
+  "name": "react-todo",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
